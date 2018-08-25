@@ -4,3 +4,6 @@ members:
   - C
   - D
   - E
+duration:
+  pairFeedbackTimeInMinutes: 0.10
+  pairSwitchTimeInSeconds: 4
