@@ -4,6 +4,13 @@ class Pair:
         self.member2=member2
     def __repr__(self):
         return str(self.member1 + "-" + self.member2)
+    def containsCommonMember(self, other):
+        return (self.__class__ == other.__class__ and
+        (self.member1==other.member1 or
+        self.member1==other.member2 or
+        self.member2==other.member1 or
+        self.member2==other.member2))
+
 
 class SpeedbackMatrix:
     def generatePairs(self, members):
@@ -17,17 +24,10 @@ class SpeedbackMatrix:
         grid=[[None for y in range(int(memberCount/2))]for x in range(memberCount-1)]
         return grid
 
-    def isEqualPair(self, pair1, pair2):
-        return (pair1.__class__ == pair2.__class__ and
-        (pair1.member1==pair2.member1 or
-        pair1.member1==pair2.member2 or
-        pair1.member2==pair2.member1 or
-        pair1.member2==pair2.member2))
-
     def isSafe(self, pair, grid, rowIndex):
         result = False
         for element in grid[rowIndex]:
-            if(self.isEqualPair(element, pair)):
+            if(pair.containsCommonMember(element)):
                 result = False
                 break
             if(element is None):
@@ -48,7 +48,7 @@ class SpeedbackMatrix:
                 grid[rowIndex][columnIndex]=None
         return (False, grid)
     def getFinalGrid(self, members):
-        if(len(members)&1 == 1):
+        if((len(members)&1) == 1):
             members.append('No one')
         pairs=self.generatePairs(members)
         grid=self.defineGrid(len(members))
