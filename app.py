@@ -1,4 +1,6 @@
 import yaml
+import time
+import subprocess
 from speedback import SpeedbackMatrix
 
 def readConfig():
@@ -24,8 +26,20 @@ def prettyPrintMatrix(matrix):
             printLeftAlign(""+str(column))
         print()
 
+def startFeedbackRoundTimer(roundCount, duration):
+    for secondsLeft in range(int(duration['feedbackTimeInMinutes']*60),0, -1):
+        print("\rRound %d : %02d:%02d minutes left" % (roundCount, int(secondsLeft/60), int(secondsLeft%60)), end="")
+        time.sleep(1)
+    print("\rTime is up", end="")
+    subprocess.call('say -r 200 "time up"', shell=True)
+
+
 config=readConfig()
-matrix=SpeedbackMatrix().getFinalGrid(config['members'])
+members=config['members']
+duration=config['duration']
+matrix=SpeedbackMatrix().getFinalGrid(members)
 
 prettyPrintMatrix(matrix)
+for roundCount in range(1, len(members)):
+    startFeedbackRoundTimer(roundCount, duration)
 
