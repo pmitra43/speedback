@@ -2,8 +2,10 @@ class Pair:
     def __init__(self, member1, member2):
         self.member1=member1
         self.member2=member2
+    
     def __repr__(self):
         return str(self.member1 + "-" + self.member2)
+    
     def containsCommonMember(self, other):
         return (self.__class__ == other.__class__ and
         (self.member1==other.member1 or
@@ -47,7 +49,8 @@ class SpeedbackMatrix:
                     return (True, grid)
                 grid[rowIndex][columnIndex]=None
         return (False, grid)
-    def getFinalGrid(self, members):
+    
+    def populateGrid(self, members):
         if((len(members)&1) == 1):
             members.append('No one')
         pairs=self.generatePairs(members)

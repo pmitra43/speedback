@@ -5,5 +5,5 @@ members:
   - D
   - E
 duration:
-  pairFeedbackTimeInMinutes: 0.10
-  pairSwitchTimeInSeconds: 4
+  pairFeedbackTimeInMinutes: 4
+  pairSwitchTimeInSeconds: 30

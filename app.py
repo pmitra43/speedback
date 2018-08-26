@@ -30,7 +30,7 @@ def prettyPrintMatrix(matrix):
 config=readConfig()
 members=config['members']
 duration=config['duration']
-matrix=SpeedbackMatrix().getFinalGrid(members)
+matrix=SpeedbackMatrix().populateGrid(members)
 timer=RoundTimer()
 
 prettyPrintMatrix(matrix)
