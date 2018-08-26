@@ -10,6 +10,6 @@ This will create pairs, and distribute them into rounds, making sure that everyb
 ### How to run:
 1. Clone this repository: `git clone git@github.com:pmitra43/speedback.git`
 2. Run `cd speedback`
-3. Install dependencies: `pip3 install -r requirements.txt`
+3. Install dependencies: `pip3 install -r dependencies.txt`
 4. Create a copy of **example-config.yml** and name it **config.yml**
 5. Run app `python3 app.py`
