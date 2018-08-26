@@ -52,7 +52,7 @@ class SpeedbackMatrix:
     
     def populateGrid(self, members):
         if((len(members)&1) == 1):
-            members.append('No one')
+            members.append('None')
         pairs=self.generatePairs(members)
         grid=self.defineGrid(len(members))
         finalGrid=self.placeElementInGrid(grid, pairs, 0)

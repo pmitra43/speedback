@@ -21,13 +21,14 @@ class App:
     def runApplication(self):
         config=self.readConfigFile()
         members=config['members']
-        duration=config['duration']
-
-        if(self.consoleIO.validatedWithUser(duration, len(members))):
+        pairFeedbackTimeInMinutes=config['duration']['pairFeedbackTimeInMinutes']
+        pairSwitchTimeInSeconds=config['duration']['pairSwitchTimeInSeconds']
+        continueApp, pairFeedbackTimeInMinutes, pairSwitchTimeInSeconds = self.consoleIO.validateWithUser(
+            pairFeedbackTimeInMinutes, pairSwitchTimeInSeconds, len(members))
+        if(continueApp):
             matrix=self.speedbackMatrix.populateGrid(members)
             self.consoleIO.prettyPrintMatrix(matrix)
-            print(duration)
-            self.timer.startRounds(duration, len(members))
+            self.timer.startRounds(pairFeedbackTimeInMinutes, pairSwitchTimeInSeconds, len(members))
         print("Thank you")
 
 App().runApplication()

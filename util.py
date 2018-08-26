@@ -36,10 +36,10 @@ class RoundTimer:
             self.printSameLine("\rRound %d coming up in %d seconds" % (roundCount, secondsLeft))
             time.sleep(1)
 
-    def startRounds(self, duration, memberLength):
+    def startRounds(self, pairFeedbackTimeInMinutes, pairSwitchTimeInSeconds, memberLength):
         for roundCount in range(1, memberLength):
-            self.startSwitchTimer(roundCount, duration['pairSwitchTimeInSeconds'])
-            self.startFeedbackRoundTimer(roundCount, duration['pairFeedbackTimeInMinutes'])
+            self.startSwitchTimer(roundCount, pairSwitchTimeInSeconds)
+            self.startFeedbackRoundTimer(roundCount, pairFeedbackTimeInMinutes)
 
 class ConsoleIO:
     def printLeftAlign(self, item):
@@ -63,18 +63,14 @@ class ConsoleIO:
         timeInSec = timeInSec+(switchTime+1)*(memberLength-1)
         return "%02d:%02d" % (int(timeInSec/60), int(timeInSec%60))
 
-    def validatedWithUser(self, duration, memberLength):
-        feedbackTime=duration['pairFeedbackTimeInMinutes']
-        switchTime=duration['pairSwitchTimeInSeconds']
+    def validateWithUser(self, feedbackTime, switchTime, memberLength):
         while(1):
             timeRequired = self.calculateTotalDuration(feedbackTime, switchTime, memberLength)
             print("With %d minutes per round and %d seconds to switch, you will need %s minutes" % 
                 (feedbackTime, switchTime, timeRequired))
             choice=input("Do you want to start/edit/quit? (s-start/e-edit/q-quit): ")
             if(choice=='s'):
-                duration['pairFeedbackTimeInMinutes']=feedbackTime
-                duration['pairSwitchTimeInSeconds']=switchTime
-                return True
+                return (True, feedbackTime, switchTime)
             elif(choice=='e'):
                 newFeedbackTime = input("Provide new pair feedback time in minutes :(%d):" % (feedbackTime))
                 newSwitchTime = input("Provide new pair switch in seconds :(%d):" % (switchTime))
@@ -84,9 +80,9 @@ class ConsoleIO:
                     if(newSwitchTime!=""):
                         switchTime=int(newSwitchTime)
                 except:
-                    print("Invalid option")
+                    print("input is not an integer")
                     continue
             elif(choice=='q'):
-                return False
+                return (False, None, None)
             else:
                 print("Wrong choice")
