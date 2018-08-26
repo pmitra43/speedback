@@ -3,7 +3,7 @@ import sys
 from speedback import SpeedbackMatrix
 from util import RoundTimer, ConsoleIO
 
-def readConfig():
+def readConfigFile():
     with open("config.yml", 'r') as stream:
         try:
             fileContent=yaml.load(stream)
@@ -11,7 +11,7 @@ def readConfig():
             print(exc)
     return fileContent
 
-config=readConfig()
+config=readConfigFile()
 members=config['members']
 duration=config['duration']
 consoleIO=ConsoleIO()
@@ -22,3 +22,4 @@ if(consoleIO.validatedWithUser(duration, len(members))):
     consoleIO.prettyPrintMatrix(matrix)
     print(duration)
     timer.startRounds(duration, len(members))
+print("Thank you")
