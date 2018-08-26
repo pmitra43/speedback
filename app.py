@@ -1,5 +1,4 @@
 import yaml
-import sys
 from speedback import SpeedbackMatrix
 from util import RoundTimer, ConsoleIO
 
