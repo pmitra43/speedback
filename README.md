@@ -12,4 +12,4 @@ This will create pairs, and distribute them into rounds, making sure that everyb
 2. Run `cd speedback`
 3. Install dependencies: `pip3 install -r dependencies.txt`
 4. Create a copy of **example-config.yml** and name it **config.yml**
-5. Run app `python3 app.py`
+5. Run app `./app.py`
