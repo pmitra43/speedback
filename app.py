@@ -10,14 +10,6 @@ class App:
         self.timer=RoundTimer()
         self.speedbackMatrix=SpeedbackMatrix()
 
-    def readConfigFile(self):
-        with open("config.yml", 'r') as stream:
-            try:
-                fileContent=yaml.load(stream)
-            except yaml.YAMLError as exc:
-                print(exc)
-        return fileContent
-
     def runApplication(self):
         config=self.readConfigFile()
         members=config['members']
@@ -30,5 +22,13 @@ class App:
             self.consoleIO.prettyPrintMatrix(matrix)
             self.timer.startRounds(pairFeedbackTimeInMinutes, pairSwitchTimeInSeconds, len(members))
         print("Thank you")
+
+    def readConfigFile(self):
+        with open("config.yml", 'r') as stream:
+            try:
+                fileContent=yaml.load(stream)
+            except yaml.YAMLError as exc:
+                print(exc)
+        return fileContent
 
 App().runApplication()

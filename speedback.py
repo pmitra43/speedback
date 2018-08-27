@@ -15,6 +15,14 @@ class Pair:
 
 
 class SpeedbackMatrix:
+    def populateGrid(self, members):
+        if((len(members)&1) == 1):
+            members.append('None')
+        pairs=self.generatePairs(members)
+        grid=self.defineGrid(len(members))
+        finalGrid=self.placeElementInGrid(grid, pairs, 0)
+        return finalGrid[1]
+
     def generatePairs(self, members):
         pairs = []
         for i in range(len(members)):
@@ -25,17 +33,7 @@ class SpeedbackMatrix:
     def defineGrid(self, memberCount):
         grid=[[None for y in range(int(memberCount/2))]for x in range(memberCount-1)]
         return grid
-
-    def isSafe(self, pair, grid, rowIndex):
-        result = False
-        for element in grid[rowIndex]:
-            if(pair.containsCommonMember(element)):
-                result = False
-                break
-            if(element is None):
-                result = True
-        return result
-
+    
     def placeElementInGrid(self, grid, pairs, index):
         if(index>=len(pairs)):
             return (True, grid)
@@ -49,11 +47,13 @@ class SpeedbackMatrix:
                     return (True, grid)
                 grid[rowIndex][columnIndex]=None
         return (False, grid)
-    
-    def populateGrid(self, members):
-        if((len(members)&1) == 1):
-            members.append('None')
-        pairs=self.generatePairs(members)
-        grid=self.defineGrid(len(members))
-        finalGrid=self.placeElementInGrid(grid, pairs, 0)
-        return finalGrid[1]
+
+    def isSafe(self, pair, grid, rowIndex):
+        result = False
+        for element in grid[rowIndex]:
+            if(pair.containsCommonMember(element)):
+                result = False
+                break
+            if(element is None):
+                result = True
+        return result

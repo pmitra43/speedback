@@ -4,11 +4,23 @@ import sys
 
 class RoundTimer:
 
-    def say(self, item):
-        subprocess.call('say -r 200 '+str(item), shell=True)
+    def startRounds(self, pairFeedbackTimeInMinutes, pairSwitchTimeInSeconds, memberLength):
+        for roundCount in range(1, memberLength):
+            self.startSwitchTimer(roundCount, pairSwitchTimeInSeconds)
+            self.startFeedbackRoundTimer(roundCount, pairFeedbackTimeInMinutes)
 
-    def printSameLine(self, item):
-        print("\r%s" % item, end="")
+    def startSwitchTimer(self, roundCount, pairSwitchTimeInSeconds):
+        for secondsLeft in range(int(pairSwitchTimeInSeconds),3, -1):
+            self.printSameLine("\rRound %d coming up in %d seconds" % (roundCount, secondsLeft))
+            time.sleep(1)
+    
+    def startFeedbackRoundTimer(self, roundCount, pairFeedbackTimeInMinutes):
+        self.doCountdown(roundCount)
+        self.showTimer(roundCount, pairFeedbackTimeInMinutes*60, pairFeedbackTimeInMinutes*30)
+        self.say("half time. It's your pair's turn now")
+        self.showTimer(roundCount, pairFeedbackTimeInMinutes*30, 0)
+        print("\rRound %d finished. Time to switch pair" % (roundCount))
+        self.say("time up")
 
     def doCountdown(self, roundCount):
         self.say("next round starting in")
@@ -22,46 +34,14 @@ class RoundTimer:
             self.printSameLine("\rOngoing Round %d : %02d:%02d minutes left" % 
             (roundCount, int(secondsLeft/60), int(secondsLeft%60)))
             time.sleep(1)
-    
-    def startFeedbackRoundTimer(self, roundCount, pairFeedbackTimeInMinutes):
-        self.doCountdown(roundCount)
-        self.showTimer(roundCount, pairFeedbackTimeInMinutes*60, pairFeedbackTimeInMinutes*30)
-        self.say("half time. It's your pair's turn now")
-        self.showTimer(roundCount, pairFeedbackTimeInMinutes*30, 0)
-        print("\rRound %d finished. Time to switch pair" % (roundCount))
-        self.say("time up")
 
-    def startSwitchTimer(self, roundCount, pairSwitchTimeInSeconds):
-        for secondsLeft in range(int(pairSwitchTimeInSeconds),3, -1):
-            self.printSameLine("\rRound %d coming up in %d seconds" % (roundCount, secondsLeft))
-            time.sleep(1)
+    def say(self, item):
+        subprocess.call('say -r 200 '+str(item), shell=True)
 
-    def startRounds(self, pairFeedbackTimeInMinutes, pairSwitchTimeInSeconds, memberLength):
-        for roundCount in range(1, memberLength):
-            self.startSwitchTimer(roundCount, pairSwitchTimeInSeconds)
-            self.startFeedbackRoundTimer(roundCount, pairFeedbackTimeInMinutes)
+    def printSameLine(self, item):
+        print("\r%s" % item, end="")
 
 class ConsoleIO:
-    def printLeftAlign(self, item):
-        sys.stdout.flush()
-        sys.stdout.write("%-25s" % item)
-
-    def prettyPrintMatrix(self, matrix):
-        columnCount=len(matrix[0])
-        self.printLeftAlign("")
-        for columnNumber in range(1, columnCount+1):
-            self.printLeftAlign("Slot "+str(columnNumber))
-        print()
-        for rowIndex, row in enumerate(matrix):
-            self.printLeftAlign("Round "+str(rowIndex+1))
-            for column in row:
-                self.printLeftAlign(""+str(column))
-            print()
-
-    def calculateTotalDuration(self, feedbackTime, switchTime, memberLength):
-        timeInSec = feedbackTime*60*(memberLength-1)
-        timeInSec = timeInSec+(switchTime+1)*(memberLength-1)
-        return "%02d:%02d" % (int(timeInSec/60), int(timeInSec%60))
 
     def validateWithUser(self, feedbackTime, switchTime, memberLength):
         while(1):
@@ -86,3 +66,24 @@ class ConsoleIO:
                 return (False, None, None)
             else:
                 print("Wrong choice")
+    
+    def calculateTotalDuration(self, feedbackTime, switchTime, memberLength):
+        timeInSec = feedbackTime*60*(memberLength-1)
+        timeInSec = timeInSec+(switchTime+1)*(memberLength-1)
+        return "%02d:%02d" % (int(timeInSec/60), int(timeInSec%60))
+
+    def prettyPrintMatrix(self, matrix):
+        columnCount=len(matrix[0])
+        self.printLeftAlign("")
+        for columnNumber in range(1, columnCount+1):
+            self.printLeftAlign("Slot "+str(columnNumber))
+        print()
+        for rowIndex, row in enumerate(matrix):
+            self.printLeftAlign("Round "+str(rowIndex+1))
+            for column in row:
+                self.printLeftAlign(""+str(column))
+            print()
+    
+    def printLeftAlign(self, item):
+        sys.stdout.flush()
+        sys.stdout.write("%-25s" % item)
