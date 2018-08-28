@@ -9,5 +9,6 @@ members:
   - H
   - I
 duration:
-  pairFeedbackTimeInMinutes: 6
+  feedbackPreparationTimeInMinutes: 5
+  pairFeedbackTimeInMinutes: 2
   pairSwitchTimeInSeconds: 30

@@ -13,14 +13,18 @@ class App:
     def runApplication(self):
         config=self.readConfigFile()
         members=config['members']
+        feedbackPreparationTimeInMinutes=config['duration']['feedbackPreparationTimeInMinutes']
         pairFeedbackTimeInMinutes=config['duration']['pairFeedbackTimeInMinutes']
         pairSwitchTimeInSeconds=config['duration']['pairSwitchTimeInSeconds']
-        continueApp, pairFeedbackTimeInMinutes, pairSwitchTimeInSeconds = self.consoleIO.validateWithUser(
-            pairFeedbackTimeInMinutes, pairSwitchTimeInSeconds, len(members))
+        continueApp, feedbackPreparationTimeInMinutes, pairFeedbackTimeInMinutes, pairSwitchTimeInSeconds = self.consoleIO.validateWithUser(
+            feedbackPreparationTimeInMinutes, pairFeedbackTimeInMinutes, pairSwitchTimeInSeconds, len(members))
         if(continueApp):
             matrix=self.speedbackMatrix.populateGrid(members)
             self.consoleIO.prettyPrintMatrix(matrix)
-            self.timer.startRounds(pairFeedbackTimeInMinutes, pairSwitchTimeInSeconds, len(members))
+            print("Feedback preparation time (minutes): %d\t" % feedbackPreparationTimeInMinutes, end="")
+            print("Feedback sharing time (minutes): %d\t" % pairFeedbackTimeInMinutes, end="")
+            print("Pair switch time (seconds): %d\t" % pairSwitchTimeInSeconds)
+            self.timer.startRounds(feedbackPreparationTimeInMinutes, pairFeedbackTimeInMinutes, pairSwitchTimeInSeconds, len(members))
         print("Thank you")
 
     def readConfigFile(self):
