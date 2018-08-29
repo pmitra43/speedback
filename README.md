@@ -13,6 +13,7 @@ This will create pairs, and distribute them into rounds, making sure that everyb
 3. Create a copy of **example-config.yml** and name it **config.yml**
 4. Add name of all the team members in `members` of config.yml
 5. Adjust the duration config:
+    * `feedbackPreparationTimeInMinutes`: denotes the amount of time to provide to a pair to prepare for feedback. **It has to be an integer.**
     * `pairFeedbackTimeInMinutes`: denotes how much time each pair will get to share feedback between them. Every person in the pair will get half of this time to speak. **It has to be an integer.**
     * `pairSwitchTimeInSeconds`: denotes the amount of time required for team members to find their next pair when a round ends. This time is provided so that the members can refer to the grid and find their next pair. **It has to be an integer.**
 6. Run app `./app.py`
