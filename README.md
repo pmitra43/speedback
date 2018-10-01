@@ -18,4 +18,4 @@ This will create pairs, and distribute them into rounds, making sure that everyb
     * `pairSwitchTimeInSeconds`: denotes the amount of time required for team members to find their next pair when a round ends. This time is provided so that the members can refer to the grid and find their next pair. **It has to be an integer.**
 6. Run app `./app.py`
 
-/*test line*/
+/*test2*/
