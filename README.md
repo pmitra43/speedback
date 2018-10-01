@@ -17,5 +17,3 @@ This will create pairs, and distribute them into rounds, making sure that everyb
     * `pairFeedbackTimeInMinutes`: denotes how much time each pair will get to share feedback between them. Every person in the pair will get half of this time to speak. **It has to be an integer.**
     * `pairSwitchTimeInSeconds`: denotes the amount of time required for team members to find their next pair when a round ends. This time is provided so that the members can refer to the grid and find their next pair. **It has to be an integer.**
 6. Run app `./app.py`
-
-/*test 3*/
